@@ -2,17 +2,17 @@ class Metricbeat < Formula
   desc "Collect metrics from your systems and services"
   homepage "https://www.elastic.co/beats/metricbeat"
   url "https://github.com/elastic/beats.git",
-      tag:      "v7.9.2",
-      revision: "2ab907f5ccecf9fd82fe37105082e89fd871f684"
+      tag:      "v7.10.0",
+      revision: "1428d58cf2ed945441fb2ed03961cafa9e4ad3eb"
   license "Apache-2.0"
-  revision 1
   head "https://github.com/elastic/beats.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "4e2e08f1d2e79337d53a8ee197199a453358a7af3e3cddd53d5cfd449c9c8909" => :catalina
-    sha256 "0ac3e0e6d9b1a0191e29209b67ac87189657fb5446e3d4f0954a21ca0243efc6" => :mojave
-    sha256 "00911be1ebddb80bfaa884b1924b703c933784039c971f74b265d1e125e27075" => :high_sierra
+    sha256 "e8b70d41e9f356b77f8499e142bd6d64f9252d6777ea78a2071147687163e719" => :big_sur
+    sha256 "85c21c85871154bf167fd82a130ffa89a1163b1714e94ade2af3b4569ed5f90d" => :catalina
+    sha256 "17bc52c02530e33e4a4fdc4f5b89d7690c95c0d3475e47bfeb557fd4c0ebbc5b" => :mojave
+    sha256 "878565910ac7e3d43a3457482fd39accbd1da6a7afb0dbb6d3f3bb6a99c58126" => :high_sierra
   end
 
   depends_on "go" => :build

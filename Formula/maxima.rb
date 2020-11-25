@@ -4,6 +4,7 @@ class Maxima < Formula
   url "https://downloads.sourceforge.net/project/maxima/Maxima-source/5.44.0-source/maxima-5.44.0.tar.gz"
   sha256 "d93f5e48c4daf8f085d609cb3c7b0bdf342c667fd04cf750c846426874c9d2ec"
   license "GPL-2.0"
+  revision 1
 
   livecheck do
     url :stable
@@ -12,30 +13,31 @@ class Maxima < Formula
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "f873f22d3e0540feb2a696cb2ec18ca7786742ae2a00faafcce968bbda56e5a9" => :catalina
-    sha256 "b6d47595e2d411752408890c331efba31819cc006284b849d8473f80dfa12948" => :mojave
-    sha256 "bb6196d4dafeacd3060782b7d46e32df9281cb8d0c5d4eb5ea280c3531ab0ab3" => :high_sierra
+    sha256 "49bdc3f26a3979633b7c232380c93566af03401683a2870fb25e3ea40a18951f" => :big_sur
+    sha256 "1b38264f8b5f867034d238be3fea3e8a3c30004f8b2fe5997e73dff3ccc5f7d6" => :catalina
+    sha256 "5a9a0e9bcffbce0871cb0e0756ce110d03129f0a2784798890766eb6c9a82c67" => :mojave
+    sha256 "96772653ca25c724239a4902a5a0f8844a8b71f2290e25824eec75d032148f98" => :high_sierra
   end
 
   depends_on "gawk" => :build
   depends_on "gnu-sed" => :build
   depends_on "perl" => :build
-  depends_on "sbcl" => :build
   depends_on "texinfo" => :build
   depends_on "gettext"
   depends_on "gnuplot"
   depends_on "rlwrap"
+  depends_on "sbcl"
 
   def install
     ENV["LANG"] = "C" # per build instructions
-    system "./configure", "--disable-debug",
-                          "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          "--enable-gettext",
-                          "--enable-sbcl",
-                          "--enable-sbcl-exec",
-                          "--with-emacs-prefix=#{share}/emacs/site-lisp/#{name}",
-                          "--with-sbcl=#{Formula["sbcl"].opt_bin}/sbcl"
+    system "./configure",
+           "--disable-debug",
+           "--disable-dependency-tracking",
+           "--prefix=#{prefix}",
+           "--enable-gettext",
+           "--enable-sbcl",
+           "--with-emacs-prefix=#{share}/emacs/site-lisp/#{name}",
+           "--with-sbcl=#{Formula["sbcl"].opt_bin}/sbcl"
     system "make"
     system "make", "install"
   end

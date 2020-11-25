@@ -3,9 +3,8 @@ class Osquery < Formula
   homepage "https://osquery.io"
   url "https://github.com/facebook/osquery/archive/3.3.2.tar.gz"
   sha256 "74280181f45046209053a3e15114d93adc80929a91570cc4497931cfb87679e4"
-  # license ["Apache-2.0", "GPL-2.0-only"] - pending https://github.com/Homebrew/brew/pull/7953
-  license "Apache-2.0"
-  revision 16
+  license any_of: ["Apache-2.0", "GPL-2.0-only"]
+  revision 17
 
   bottle do
     cellar :any
@@ -18,7 +17,7 @@ class Osquery < Formula
 
   depends_on "bison" => :build
   depends_on "cmake" => :build
-  depends_on "python@3.8" => :build
+  depends_on "python@3.9" => :build
   depends_on "augeas"
   depends_on "boost"
   depends_on "gflags"
@@ -62,8 +61,8 @@ class Osquery < Formula
   # Upstream fix for boost 1.69, remove in next version
   # https://github.com/facebook/osquery/pull/5496
   patch do
-    url "https://github.com/facebook/osquery/commit/130b3b3324e2.diff?full_index=1"
-    sha256 "46bce0c62f1a8f0df506855049991e6fceb6d1cc4e1113a2f657e76b5c5bdd14"
+    url "https://github.com/facebook/osquery/commit/130b3b3324e2.patch?full_index=1"
+    sha256 "b5bcb8a774423131be72dc7981227552f565a7102edb27b0644c1c904ff9949a"
   end
 
   # Patch for compatibility with OpenSSL 1.1
@@ -108,13 +107,13 @@ class Osquery < Formula
     # Set the version
     ENV["OSQUERY_BUILD_VERSION"] = version
 
-    xy = Language::Python.major_minor_version Formula["python@3.8"].opt_bin/"python3"
+    xy = Language::Python.major_minor_version Formula["python@3.9"].opt_bin/"python3"
     ENV.prepend_create_path "PYTHONPATH", buildpath/"third-party/python/lib/python#{xy}/site-packages"
 
     res = resources.map(&:name).to_set - %w[aws-sdk-cpp third-party]
     res.each do |r|
       resource(r).stage do
-        system Formula["python@3.8"].opt_bin/"python3",
+        system Formula["python@3.9"].opt_bin/"python3",
                "setup.py", "install",
                "--prefix=#{buildpath}/third-party/python/",
                "--single-version-externally-managed",

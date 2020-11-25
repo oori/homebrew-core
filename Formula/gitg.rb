@@ -10,6 +10,7 @@ class Gitg < Formula
   end
 
   bottle do
+    sha256 "232a57ce6c0dd8bde19be8b7fe3dc62727d7c8e9bc37621acec5b759f6579821" => :big_sur
     sha256 "ddbda9989373dd4d36950e681e9816e92eeadcf0dbe6f8cc93c2b608b4a28947" => :catalina
     sha256 "a9de95c66bb3f82a89a00646650aa356077b5546a6b666195f0328f9eb303a61" => :mojave
     sha256 "ef8b47fccaf050ac613f4e2c43d75c7903d424daf114128d23666b8e68495785" => :high_sierra
@@ -37,8 +38,8 @@ class Gitg < Formula
   # Fix libgitg compile on macOS from https://gitlab.gnome.org/GNOME/gitg/-/merge_requests/142
   # Remove for next version
   patch do
-    url "https://gitlab.gnome.org/GNOME/gitg/-/commit/67f5cd6925e8bf1e4c7e5b65fe9370c2cdd1d273.diff"
-    sha256 "b9b842d1be3e435ce14a57d30702138a0e08ba0f9ef95249876fc05aeac2417c"
+    url "https://gitlab.gnome.org/GNOME/gitg/-/commit/67f5cd6925e8bf1e4c7e5b65fe9370c2cdd1d273.patch"
+    sha256 "e81c59f77aceb8c1ae3914ffebf24f5a0287bd2cf9511996eb8a3f4282e8542d"
   end
 
   def install

@@ -1,15 +1,16 @@
 class Okteto < Formula
   desc "Build better apps by developing and testing code directly in Kubernetes"
   homepage "https://okteto.com"
-  url "https://github.com/okteto/okteto/archive/1.9.2.tar.gz"
-  sha256 "87a3268495d760943e85ce52a036f87269938b93df5e86edd40ddc0836809be1"
+  url "https://github.com/okteto/okteto/archive/1.10.0.tar.gz"
+  sha256 "32da92245ae508d5c68f4d3b5dbbfdee3786bc955ebf2e08cb1d8df3cce5c6e6"
   license "Apache-2.0"
+  head "https://github.com/okteto/okteto.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "fa102ba4116a2af3fb0d8296eb24fadf2aa1f95d6ed1bf3ffb9997cf9e4eb346" => :catalina
-    sha256 "1181516dc3e78ddc180183a60969b259bde4730a35c563f3b151b8128c382073" => :mojave
-    sha256 "c708a4c7c008bbf60e1ac838750a88fa9ef35f9482e796333be28e2bd6f5f666" => :high_sierra
+    sha256 "43fd9430bb6da4eed008d9dfa6ef388c8e381b6c86f110b75ee651e3e5ea2945" => :big_sur
+    sha256 "088cb16f7597d509b3f63724da1fb28919b1262bf1b358bdaedabc7c4c93b2df" => :catalina
+    sha256 "e0b83e2d3f75ebdf4157b5c7c7203a15885e3493de8af48c5ce6601b2c256c0d" => :mojave
   end
 
   depends_on "go" => :build
@@ -17,7 +18,7 @@ class Okteto < Formula
   def install
     ldflags = "-s -w -X github.com/okteto/okteto/pkg/config.VersionString=#{version}"
     tags = "osusergo netgo static_build"
-    system "go", "build", "-o", "#{bin}/#{name}", "-trimpath", "-ldflags", ldflags, "-tags", tags
+    system "go", "build", *std_go_args, "-ldflags", ldflags, "-tags", tags
   end
 
   test do
@@ -25,6 +26,7 @@ class Okteto < Formula
     system "echo | okteto init --overwrite --file test.yml"
     expected = <<~EOS
       name: #{Pathname.getwd.basename}
+      emptyimage: false
       image: okteto/ruby:2
       command: bash
       sync:

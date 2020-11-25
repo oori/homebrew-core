@@ -1,16 +1,22 @@
 class Nushell < Formula
   desc "Modern shell for the GitHub era"
   homepage "https://www.nushell.sh"
-  url "https://github.com/nushell/nushell/archive/0.21.0.tar.gz"
-  sha256 "223df54901cf924c8018629827c00c73a3cf45bbb178503484318734e9d99e82"
+  url "https://github.com/nushell/nushell/archive/0.22.0.tar.gz"
+  sha256 "a7ee864b711d43bec1d611aa11ac70ff62f254d09ee507bbbe7aa3ceaf7b4f39"
   license "MIT"
   head "https://github.com/nushell/nushell.git", branch: "main"
 
+  livecheck do
+    url "https://github.com/nushell/nushell/releases/latest"
+    regex(%r{href=.*?/tag/v?(\d+(?:[._]\d+)+)["' >]}i)
+  end
+
   bottle do
     cellar :any
-    sha256 "6787e969c7c5bf501156a8f10e22b671b8e106327207281c6b322a703f338505" => :catalina
-    sha256 "443c9ae3a5090bd379a0b0ba1fe8bc32a645ed89aaed6ad1abf356093e0b272a" => :mojave
-    sha256 "a0476a3d69731a438925838e5d41c31e839c5aebc51d0951fc0a6a17f7b32cd1" => :high_sierra
+    sha256 "8ef4ec4eb0a063ad4b18f8d85e0da853bf4ff1959d8625c626fa48e78ca1a9de" => :big_sur
+    sha256 "ee05b2e73a5147f6cec8dd144065aab2d02085620e8f8339d0a2ca7329156de0" => :catalina
+    sha256 "021e45997127e521d0736734f593a3f318187b352029825d3b4b1fdd59d69cf1" => :mojave
+    sha256 "ba1fcf43f7e33be550817233e5208f054d8646cc2ac3c133d4466daec3a5f35a" => :high_sierra
   end
 
   depends_on "rust" => :build

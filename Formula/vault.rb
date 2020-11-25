@@ -5,8 +5,8 @@ class Vault < Formula
   desc "Secures, stores, and tightly controls access to secrets"
   homepage "https://vaultproject.io/"
   url "https://github.com/hashicorp/vault.git",
-      tag:      "v1.5.4",
-      revision: "1a730771ec70149293efe91e1d283b10d255c6d1"
+      tag:      "v1.6.0",
+      revision: "7ce0bd9691998e0443bc77e98b1e2a4ab1e965d4"
   license "MPL-2.0"
   head "https://github.com/hashicorp/vault.git"
 
@@ -17,9 +17,10 @@ class Vault < Formula
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "67afea21945f75be2e3d22d12054318153f63a3dfc8cdbb60d2a2860c167c7a3" => :catalina
-    sha256 "c7219e29320e01431aa8ebabf8230575c7e6dd8de7efb1656663a7c138e8201e" => :mojave
-    sha256 "190b4a3c4633c3bbd3d8fe61e019287607d00531c5d07f147fe0f088b2db6728" => :high_sierra
+    rebuild 1
+    sha256 "3598ed488978ce4fd61e1e5fe52b2dbc0df5c7ffda92d42f97eb5c078b8a8f43" => :big_sur
+    sha256 "2bbff9f9a7826fd4c16d569f25b146d009c946e6c977e148ee48bd8676aaf012" => :catalina
+    sha256 "314868275bdfb1d4bc696a0dc28fac078417b4255cc427c23f05fb5915a52108" => :mojave
   end
 
   depends_on "go" => :build
@@ -73,7 +74,7 @@ class Vault < Formula
     ENV["VAULT_ADDR"] = "http://127.0.0.1:#{port}"
 
     pid = fork { exec bin/"vault", "server", "-dev" }
-    sleep 1
+    sleep 5
     system bin/"vault", "status"
     Process.kill("TERM", pid)
   end

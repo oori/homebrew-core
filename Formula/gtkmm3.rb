@@ -13,6 +13,7 @@ class Gtkmm3 < Formula
 
   bottle do
     cellar :any
+    sha256 "373d7342c65f7286481b88fdcd96ad24daebe0f07a40bcaa95495c87ddf1e66a" => :big_sur
     sha256 "c656b3844e5e94f34556e5b8b0b6ee3099e7a2c1b96c839229bbc9997c18218d" => :catalina
     sha256 "12efd715a1422f80321a2af07a6d82d1e95772b4c23dea90d8138e3a22475886" => :mojave
     sha256 "2183abaf056161d4d13d8bd86fc5795b3e32caf3db7c1a4b8a44eba320104402" => :high_sierra
@@ -120,12 +121,14 @@ class Gtkmm3 < Formula
       -lgobject-2.0
       -lgtk-3
       -lgtkmm-3.0
-      -lintl
       -lpango-1.0
       -lpangocairo-1.0
       -lpangomm-1.4
       -lsigc-2.0
     ]
+    on_macos do
+      flags << "-lintl"
+    end
     system ENV.cxx, "-std=c++11", "test.cpp", "-o", "test", *flags
     system "./test"
   end

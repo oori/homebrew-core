@@ -1,6 +1,7 @@
 class Sdl2 < Formula
   desc "Low-level access to audio, keyboard, mouse, joystick, and graphics"
   homepage "https://www.libsdl.org/"
+  license "Zlib"
   revision 1
 
   stable do
@@ -13,6 +14,13 @@ class Sdl2 < Formula
       url "https://bugzilla.libsdl.org/attachment.cgi?id=4263"
       sha256 "07ea066e805f82d85e6472e767ba75d265cb262053901ac9a9e22c5f8ff187a5"
     end
+
+    # Fix configure script detects Apple Silicon Macs as iPhones.
+    # https://bugzilla.libsdl.org/show_bug.cgi?id=5232
+    patch do
+      url "https://hg.libsdl.org/SDL/raw-rev/af22dd6c0787"
+      sha256 "df68efb43e451789c1bf2873dabc9a70c66264f8b7ad360a71ea4c643c6acc37"
+    end
   end
 
   livecheck do
@@ -22,9 +30,10 @@ class Sdl2 < Formula
 
   bottle do
     cellar :any
-    sha256 "4dcd635465d16372ca7a7bb2b94221aa21de02f681a22e9239d095b66fb00c63" => :catalina
-    sha256 "8733b127dd4ba6179e6ad9e6336418df9dbad8eb13f05597c05e6916f2ff0543" => :mojave
-    sha256 "b71346aebd499ed30f6de2f58a333c50575bc3bf73fbba6dcaef5a04c58282c5" => :high_sierra
+    rebuild 2
+    sha256 "bdf2c30a7267e33a214a0170b6639a31f6a86b5ae524ebfa9dcb06c54d2c1514" => :big_sur
+    sha256 "d02d45d59eabad3ed6ffdd780e44f798f35748a1080ce48ded17934bd0db2e05" => :catalina
+    sha256 "6ff1b92dc1515a631549343ea7f52ddc108e5a08cd5f462f2ba0a31a04fd0d13" => :mojave
   end
 
   head do
@@ -47,7 +56,7 @@ class Sdl2 < Formula
 
     system "./autogen.sh" if build.head?
 
-    args = %W[--prefix=#{prefix} --without-x]
+    args = %W[--prefix=#{prefix} --without-x --enable-hidapi]
     system "./configure", *args
     system "make", "install"
   end

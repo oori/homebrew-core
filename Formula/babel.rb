@@ -4,8 +4,8 @@ require "json"
 class Babel < Formula
   desc "Compiler for writing next generation JavaScript"
   homepage "https://babeljs.io/"
-  url "https://registry.npmjs.org/@babel/core/-/core-7.12.1.tgz"
-  sha256 "ffc04ccd8f62cb29c8ab6ead10cc2254716aac6df3c2f63632d80b6b27137b67"
+  url "https://registry.npmjs.org/@babel/core/-/core-7.12.9.tgz"
+  sha256 "5735f6d4256f0e81b5c3ba1c0a0df1f9364c9955987829a4c84d5f5a20074381"
   license "MIT"
 
   livecheck do
@@ -13,26 +13,31 @@ class Babel < Formula
   end
 
   bottle do
-    sha256 "87d99aa8d29a652aa610745e95579274cd854b301eb1044ac972e4489748f349" => :catalina
-    sha256 "b78ab95ea6f544a0c2a3325ad4d89cbd5196b78d46bed549c815cf01d24b4c86" => :mojave
-    sha256 "cf805d8ade32058695247a80f8a669ecfc21bdf4a85087c979b7a364a9f4808a" => :high_sierra
+    cellar :any_skip_relocation
+    sha256 "415866851adc5f35702eb931cbf56601d2626e4fb9ff5aec23ff4baad1dd6a9b" => :big_sur
+    sha256 "1153bde1ce1b1078d99c94505315e0b67ca498be667d1b81cd8e8b8374b03124" => :catalina
+    sha256 "aaeba5292a84bbf7e36fed50a579f73ea74bfa2ecd9b14fd88cf7fc86d1177b3" => :mojave
   end
 
   depends_on "node"
 
   resource "babel-cli" do
-    url "https://registry.npmjs.org/@babel/cli/-/cli-7.11.5.tgz"
-    sha256 "753dac0c168274369d18cb7c2d90326173aa15639aa843d81b29ca2ac64926e5"
+    url "https://registry.npmjs.org/@babel/cli/-/cli-7.12.8.tgz"
+    sha256 "bc72a36f5f1d3de643d5907194d38bf6f053e5b0b40272e37780eb0be132ec96"
   end
 
   def install
     (buildpath/"node_modules/@babel/core").install Dir["*"]
     buildpath.install resource("babel-cli")
 
+    cd buildpath/"node_modules/@babel/core" do
+      system "npm", "install", *Language::Node.local_npm_install_args, "--production"
+    end
+
     # declare babel-core as a bundledDependency of babel-cli
     pkg_json = JSON.parse(IO.read("package.json"))
     pkg_json["dependencies"]["@babel/core"] = version
-    pkg_json["bundledDependencies"] = ["@babel/core"]
+    pkg_json["bundleDependencies"] = ["@babel/core"]
     IO.write("package.json", JSON.pretty_generate(pkg_json))
 
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)

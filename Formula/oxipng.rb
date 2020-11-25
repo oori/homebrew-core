@@ -1,15 +1,15 @@
 class Oxipng < Formula
   desc "Multithreaded PNG optimizer written in Rust"
   homepage "https://github.com/shssoichiro/oxipng"
-  url "https://github.com/shssoichiro/oxipng/archive/v3.0.1.tar.gz"
-  sha256 "31b036b146d087b989c22111637129ab8cb29a26719bfff1290427ff8b595e11"
+  url "https://github.com/shssoichiro/oxipng/archive/v4.0.1.tar.gz"
+  sha256 "c5684730757a49a55c3bac66de139da5a1fdcd190f8ea3b9a95e1fc8feccb106"
   license "MIT"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "b718645e952cd09e9b9b950b738bcfa7d81d24d2ccc94d3db6c76da1232ff932" => :catalina
-    sha256 "b646164d98e8fa1cde4ccd2f2f00620f43a14dbb3c1714c24aef9a49c4cc9e96" => :mojave
-    sha256 "b99d3c1bd4936a71b6948fca53644a2791efbf59260b57d3bb2cdea57ee8c746" => :high_sierra
+    sha256 "6d64ae1d1ac76e5fefab707194a9e3507637a3802cdb99f9d2a5cb9445b2e83b" => :big_sur
+    sha256 "8a526f4ed5017b9473701529d82f571d771201f75291f7d28e34ae2997369c2c" => :catalina
+    sha256 "6f5a043137f073691026e73f2e78956339efb79645dfcc6cf8f4f1687c695a53" => :mojave
   end
 
   depends_on "rust" => :build

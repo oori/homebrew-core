@@ -1,9 +1,10 @@
 class Logstash < Formula
   desc "Tool for managing events and logs"
   homepage "https://www.elastic.co/products/logstash"
-  url "https://artifacts.elastic.co/downloads/logstash/logstash-oss-7.9.2.tar.gz"
-  sha256 "611bbb38222c266b813c2fa67fa050969ec2b006db8ad9c93e7b80a9a5fa4ed3"
+  url "https://artifacts.elastic.co/downloads/logstash/logstash-oss-7.9.3.tar.gz"
+  sha256 "e4712cff66e2f26eb83f447c6871a0c85242aa2171b35681179f56ce0f524c23"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/elastic/logstash.git"
 
   livecheck do
@@ -13,7 +14,7 @@ class Logstash < Formula
 
   bottle :unneeded
 
-  depends_on java: "1.8"
+  depends_on "openjdk@11"
 
   def install
     if build.head?
@@ -42,7 +43,7 @@ class Logstash < Formula
     (libexec/"config").rmtree
 
     bin.install libexec/"bin/logstash", libexec/"bin/logstash-plugin"
-    bin.env_script_all_files(libexec/"bin", Language::Java.java_home_env("1.8"))
+    bin.env_script_all_files(libexec/"bin", Language::Java.java_home_env("11"))
   end
 
   def post_install

@@ -11,6 +11,7 @@ class Ghostscript < Formula
   end
 
   bottle do
+    sha256 "e4257c3d71ed8777dca98f732ac83e9a3477e93bbdb3b3e25d4ffbb5dfa823ee" => :big_sur
     sha256 "d6c05b6c190b6e908d09546977eb2dc111b475ced5db2719cba16ce89ce0b0ed" => :catalina
     sha256 "b5e6adcbf8f65731d1f3347e81e7ee494a77f35dae6a03aab4d735e714e07b05" => :mojave
     sha256 "c582c8db6f927273af8e33521aaa33111f216ba05ef36a6d4a2befe8da5d3062" => :high_sierra
@@ -37,6 +38,13 @@ class Ghostscript < Formula
   resource "fonts" do
     url "https://downloads.sourceforge.net/project/gs-fonts/gs-fonts/8.11%20%28base%2035%2C%20GPL%29/ghostscript-fonts-std-8.11.tar.gz"
     sha256 "0eb6f356119f2e49b2563210852e17f57f9dcc5755f350a69a46a0d641a0c401"
+  end
+
+  # Fix build on ARM Big Sur, updating config.{guess,sub}
+  # https://bugs.ghostscript.com/show_bug.cgi?id=703095
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/98c39e09/ghostscript/config.patch"
+    sha256 "155cf2ee5a498d441c3194ba3d75cb7812beaa3f507a72017174a884bf742862"
   end
 
   patch :DATA # Uncomment macOS-specific make vars

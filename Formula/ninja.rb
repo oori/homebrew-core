@@ -4,7 +4,7 @@ class Ninja < Formula
   url "https://github.com/ninja-build/ninja/archive/v1.10.1.tar.gz"
   sha256 "a6b6f7ac360d4aabd54e299cc1d8fa7b234cd81b9401693da21221c62569a23e"
   license "Apache-2.0"
-  revision 2
+  revision 3
   head "https://github.com/ninja-build/ninja.git"
 
   livecheck do
@@ -13,30 +13,25 @@ class Ninja < Formula
   end
 
   bottle do
-    sha256 "63c39e6268dc84add9ec7322a8d030546054892a89cd0df362ae8b71d9fe3dd1" => :catalina
-    sha256 "1522e6c7e3cf3e9d6c8c4bb19c118f20def7d10f681a5af466486e5f8f50d388" => :mojave
-    sha256 "48ae1960e86fc500b4f4c6d90ec79d82dece00ae7e26936a12cc539b2f707e37" => :high_sierra
+    rebuild 1
+    sha256 "c5b5be39f81d648fd690f26fbccdb3fafba6d2ccb2454233c2e9cce5e74d6764" => :big_sur
+    sha256 "c608321fd864f4ab3fe7b5778743ac48e6e0676d7ccb336825e4a7da1eb49cc6" => :catalina
+    sha256 "6e11b8043a806c7845de5f0d21410a5a5fb253829b23df33235900b1006ac9d7" => :mojave
   end
 
-  depends_on "cmake" => :build
-  depends_on "python@3.8"
+  depends_on "python@3.9"
 
   # from https://github.com/ninja-build/ninja/pull/1836, remove in next release
   patch do
-    url "https://github.com/ninja-build/ninja/commit/2f3e5275e2ea67cb634488957adbb997c2ff685f.diff?full_index=1"
-    sha256 "aee7a3e862c8ded377e4a948390519bc7ff17cae69ae779d3c5172562d9559f2"
+    url "https://github.com/ninja-build/ninja/commit/2f3e5275e2ea67cb634488957adbb997c2ff685f.patch?full_index=1"
+    sha256 "77e96405d6f2d4dbeee07b07186b5963257573fd470894a1ed78e5e6a288e5eb"
   end
 
   def install
-    inreplace "CMakeLists.txt", 'NINJA_PYTHON="python"', "NINJA_PYTHON=\"#{Formula["python@3.8"].opt_bin}/python3\""
+    py = Formula["python@3.9"].opt_bin/"python3"
+    system py, "./configure.py", "--bootstrap", "--verbose", "--with-python=#{py}"
 
-    system "cmake", "-Bbuild-cmake", "-H.", *std_cmake_args
-    system "cmake", "--build", "build-cmake"
-
-    # Quickly test the build
-    system "./build-cmake/ninja_test"
-
-    bin.install "build-cmake/ninja"
+    bin.install "ninja"
     bash_completion.install "misc/bash-completion" => "ninja-completion.sh"
     zsh_completion.install "misc/zsh-completion" => "_ninja"
   end

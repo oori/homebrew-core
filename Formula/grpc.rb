@@ -2,8 +2,8 @@ class Grpc < Formula
   desc "Next generation open source RPC library and framework"
   homepage "https://grpc.io/"
   url "https://github.com/grpc/grpc.git",
-    tag:      "v1.32.0",
-    revision: "414bb8322de2411eee1f4e841ff29d887bec7884",
+    tag:      "v1.33.2",
+    revision: "ee5b762f33a42170144834f5ab7efda9d76c480b",
     shallow:  false
   license "Apache-2.0"
   revision 1
@@ -16,10 +16,9 @@ class Grpc < Formula
 
   bottle do
     cellar :any
-    rebuild 1
-    sha256 "0588400a642f91dc3a04a51af045f20f47babc301f87ba8ffa5c7493c2e618a7" => :catalina
-    sha256 "69135cd3114f1ea57d34be778a992c0e56e9d01253d8f48966e6f5cd51ccf6d3" => :mojave
-    sha256 "47ccc49dab77f9844283f1edd05a82a4ae64b8f86fd8943b6580ee9fe4abf915" => :high_sierra
+    sha256 "138894ca88f8704b6521110684e56227fc9558fdd1a28f1ea8b12eeac795ed0e" => :big_sur
+    sha256 "afb7a2c507cf53ee6b5e49516f1c9c60b6d5d4518866aed1bd4cc3a5659a1a13" => :catalina
+    sha256 "226094cffe117426c593d84ad4c8d736018d0f72de594fac3b9c3c434cb9f934" => :mojave
   end
 
   depends_on "autoconf" => :build
@@ -37,6 +36,8 @@ class Grpc < Formula
     mkdir "cmake/build" do
       args = %w[
         ../..
+        -DCMAKE_CXX_STANDARD=17
+        -DCMAKE_CXX_STANDARD_REQUIRED=TRUE
         -DBUILD_SHARED_LIBS=ON
         -DgRPC_BUILD_TESTS=OFF
         -DgRPC_INSTALL=ON

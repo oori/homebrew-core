@@ -11,7 +11,9 @@ class Druid < Formula
 
   bottle :unneeded
 
-  depends_on java: "1.8"
+  deprecate! because: :does_not_build
+
+  depends_on "openjdk@8"
   depends_on "zookeeper"
 
   resource "mysql-metadata-storage" do

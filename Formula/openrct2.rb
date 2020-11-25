@@ -2,15 +2,16 @@ class Openrct2 < Formula
   desc "Open source re-implementation of RollerCoaster Tycoon 2"
   homepage "https://openrct2.io/"
   url "https://github.com/OpenRCT2/OpenRCT2.git",
-      tag:      "v0.3.1",
-      revision: "d01dcea98a5e82b28a3a8b9ff9690986e7532d58"
+      tag:      "v0.3.2",
+      revision: "cea5fab238e5dd17a2f958c0a484ad97035264ae"
   license "GPL-3.0-only"
   head "https://github.com/OpenRCT2/OpenRCT2.git", branch: "develop"
 
   bottle do
     cellar :any
-    sha256 "c544e683df46bbaa04bd207df9438b4235c55bf40d7a44492e67c0619f168053" => :catalina
-    sha256 "a12caa576f824dad7af6a0c3841d74a382ec4598736b2077b35f86eae95ee965" => :mojave
+    sha256 "109a8f7a28f2f13a23a4bf42ac84438db7f624fbdd2f1ed757580e6f8663fcb3" => :big_sur
+    sha256 "dad7b09f8b99e6fc19cc50a7d83d752b7245d869df90006e4eac2cde76ff6e11" => :catalina
+    sha256 "d1e3f34d2bf5cde75033a84b04962ad2947622e7f845146a2c85b72cc3ae0179" => :mojave
   end
 
   depends_on "cmake" => :build

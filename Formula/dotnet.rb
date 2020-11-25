@@ -2,15 +2,20 @@ class Dotnet < Formula
   desc ".NET Core"
   homepage "https://dotnet.microsoft.com/"
   url "https://github.com/dotnet/source-build.git",
-      tag:      "v3.1.108-SDK",
-      revision: "05a0c8f6b13fcbec4b441c977b639b75e8a74f67"
+      tag:      "v3.1.110-SDK",
+      revision: "2b1abb23997ef7cd23182455e0c6566e205e43d0"
   license "MIT"
+
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)-SDK$/i)
+  end
 
   bottle do
     cellar :any
-    sha256 "777c2c233711c7c68de632a5ca7c8f08ae8ecc3ee3eb984ce9865add00af9b69" => :catalina
-    sha256 "b7c249f4be6c9fa58482b03f3398178131e67db280ee06460988df2a598d3d22" => :mojave
-    sha256 "12d970b23c3671c72a9ade43b405f9e8b8779d016c7c846750f6097429158b2e" => :high_sierra
+    sha256 "90d24b7d83bd2d5da82148beca9c4ae758402226b848f2caf98093c7c4d073f8" => :catalina
+    sha256 "952fab6c217409f77da328251a234e3486feba52427459da06ea7f1f8a7bb91f" => :mojave
+    sha256 "41fd78bd40cff8931aa9d059bed8bc9575270a1ef32ef854e1911b069d6c8a6c" => :high_sierra
   end
 
   depends_on "cmake" => :build
@@ -20,16 +25,7 @@ class Dotnet < Formula
   depends_on "icu4c"
   depends_on "openssl"
 
-  # Patch of https://github.com/dotnet/source-build/pull/1789 which will be
-  # released with tag 3.1.110 in November 2020.
-  resource "0005-Fix-bad-configure-tests.patch" do
-    url "https://raw.githubusercontent.com/dotnet/source-build/17c6409189ed29f0fac2e8f4b1c30d882e6756b5/patches/coreclr/0005-Fix-bad-configure-tests.patch"
-    sha256 "57b83f9445d59137bdcc31c2a64d413bae23e80dc18f6fbcd8ceaac1d8b6754b"
-  end
-
   def install
-    resource("0005-Fix-bad-configure-tests.patch").stage buildpath/"patches/coreclr"
-
     # Arguments needed to not artificially time-limit downloads from Azure.
     # See the following GitHub issue comment for details:
     # https://github.com/dotnet/source-build/issues/1596#issuecomment-670995776

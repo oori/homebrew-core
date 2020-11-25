@@ -14,6 +14,8 @@ class Squashfuse < Formula
     sha256 "bf4e6ca88d094fd7d92fbab61dd1c3a4e71b60d7668d23b6044c90e8167833c5" => :el_capitan
   end
 
+  deprecate! because: "requires FUSE"
+
   depends_on "pkg-config" => :build
   depends_on "lz4"
   depends_on "lzo"

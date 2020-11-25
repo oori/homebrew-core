@@ -6,15 +6,6 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-      - name: Check commit format
-        uses: Homebrew/actions/check-commit-format@master
-        with:
-          token: ${{secrets.HOMEBREW_GITHUB_API_TOKEN}}
-      - name: Cancel previous runs
-        uses: Homebrew/actions/cancel-previous-runs@master
-        if: always()
-        with:
-          token: ${{secrets.HOMEBREW_GITHUB_API_TOKEN}}
       - name: Label pull request
         uses: Homebrew/actions/label-pull-requests@master
         if: always()
@@ -44,7 +35,12 @@ jobs:
                     "content": "\n  disable!.*\n"
                 }, {
                     "label": "legacy",
-                    "path": "Formula/.+@.+"
+                    "path": "Formula/.+@.+",
+                    "except": [
+                        "Formula/openssl@1.1.rb",
+                        "Formula/openssl@3.0.rb",
+                        "Formula/python@3.9.rb"
+                    ]
                 }, {
                     "label": "missing license",
                     "path": "Formula/.+",
@@ -65,6 +61,10 @@ jobs:
                     "label": "java",
                     "path": "Formula/.+",
                     "content": "depends_on \"?(?:java|openjdk@?).+"
+                }, {
+                    "label": "linux-only",
+                    "path": "Formula/.+",
+                    "content": "depends_on :linux"
                 }, {
                     "label": "lua",
                     "path": "Formula/.+",
@@ -101,5 +101,18 @@ jobs:
                     "label": "swift",
                     "path": "Formula/.+",
                     "content": "system \"swift\", \"build\""
+                }, {
+                    "label": "automerge-skip",
+                    "path": "Formula/(patchelf|binutils).rb"
                 }
             ]
+      - name: Check commit format
+        uses: Homebrew/actions/check-commit-format@master
+        if: always()
+        with:
+          token: ${{secrets.HOMEBREW_GITHUB_API_TOKEN}}
+      - name: Cancel previous runs
+        uses: Homebrew/actions/cancel-previous-runs@master
+        if: always()
+        with:
+          token: ${{secrets.HOMEBREW_GITHUB_API_TOKEN}}

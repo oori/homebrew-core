@@ -4,6 +4,7 @@ class Opencv < Formula
   url "https://github.com/opencv/opencv/archive/4.5.0.tar.gz"
   sha256 "dde4bf8d6639a5d3fe34d5515eab4a15669ded609a1d622350c7ff20dace1907"
   license "Apache-2.0"
+  revision 5
 
   livecheck do
     url :stable
@@ -11,9 +12,9 @@ class Opencv < Formula
   end
 
   bottle do
-    sha256 "f5e3ccb8fc40fa7d97d1f29cf581dd1b20923c0708e7fc61de6e2ec5cc3c1579" => :catalina
-    sha256 "13fae3bf29f5944c9c5919961a4556f484fc95300d59dfc5a958d835ba81f61d" => :mojave
-    sha256 "92067252d7748f9d675686541f5685bc16636c18574a0ffa9afcaa99ecc91734" => :high_sierra
+    sha256 "d509e0e1bf40f9e0ab63e10eb8fed20012465cd4215c3151279615f362611e65" => :big_sur
+    sha256 "53c0e54e14cd884c586c5f75f009e15eb919bb431d70df759349836e5d2fcc07" => :catalina
+    sha256 "26bba5b3741c786ac4a5bc4411e81cd9b24a41ee00bd5bd9b7a15120ab7c1290" => :mojave
   end
 
   depends_on "cmake" => :build
@@ -30,7 +31,7 @@ class Opencv < Formula
   depends_on "openblas"
   depends_on "openexr"
   depends_on "protobuf"
-  depends_on "python@3.8"
+  depends_on "python@3.9"
   depends_on "tbb"
   depends_on "vtk"
   depends_on "webp"
@@ -84,7 +85,7 @@ class Opencv < Formula
       -DWITH_VTK=ON
       -DBUILD_opencv_python2=OFF
       -DBUILD_opencv_python3=ON
-      -DPYTHON3_EXECUTABLE=#{Formula["python@3.8"].opt_bin}/python3
+      -DPYTHON3_EXECUTABLE=#{Formula["python@3.9"].opt_bin}/python3
     ]
 
     # The compiler on older Mac OS cannot build some OpenCV files using AVX2
@@ -123,7 +124,7 @@ class Opencv < Formula
                     "-o", "test"
     assert_equal `./test`.strip, version.to_s
 
-    output = shell_output(Formula["python@3.8"].opt_bin/"python3 -c 'import cv2; print(cv2.__version__)'")
+    output = shell_output(Formula["python@3.9"].opt_bin/"python3 -c 'import cv2; print(cv2.__version__)'")
     assert_equal version.to_s, output.chomp
   end
 end

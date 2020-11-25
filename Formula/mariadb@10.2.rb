@@ -1,8 +1,8 @@
 class MariadbAT102 < Formula
   desc "Drop-in replacement for MySQL"
   homepage "https://mariadb.org/"
-  url "https://downloads.mariadb.org/f/mariadb-10.2.34/source/mariadb-10.2.34.tar.gz"
-  sha256 "f1be31a25f963c09b59149ea097c1bdf3855fc7a0a17392242dc8d562a5f0ad7"
+  url "https://downloads.mariadb.org/f/mariadb-10.2.36/source/mariadb-10.2.36.tar.gz"
+  sha256 "652997e5f11db8c3953aa01cd583513306a2571294020f3022ac2d7bd6f2d2c0"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,9 +11,10 @@ class MariadbAT102 < Formula
   end
 
   bottle do
-    sha256 "8cf1e7bc14e8bf84a32f5201d7c0d92e9ad60c3dd7a5be76b136ff7360ad920a" => :catalina
-    sha256 "24b28c501e066d0309606705870ed5228e6004db1da7e6a851ce1eae6e711a9c" => :mojave
-    sha256 "58e7c53c906865496cfc3fd2ca8a794cd36e75e2c65d76e306596bdc1ebd5386" => :high_sierra
+    sha256 "3d6766c25029eb473e23ee8b5f1087e648d450fb239761eafa045787cd04be42" => :big_sur
+    sha256 "49ee54b5851c2c7319ba3a6b197546c47ddeed4470c090baf4c66a9f4a4a3d0c" => :catalina
+    sha256 "55b500d26c5c41b3c4db7415ac2208c2d76bc839cd43c8e2eb5e016fbf9277f7" => :mojave
+    sha256 "9630fbada4370ee79a97adc06dbd4eacfd492ea3e29d5522f9b4f7ba62db664a" => :high_sierra
   end
 
   keg_only :versioned_formula

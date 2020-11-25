@@ -4,6 +4,7 @@ class NanopbGenerator < Formula
   url "https://jpa.kapsi.fi/nanopb/download/nanopb-0.4.3.tar.gz"
   sha256 "91b4be33691dc1532d94b56f308743b8a07d209126b7fe21f98f8fdadd8edb95"
   license "Zlib"
+  revision 2
 
   livecheck do
     url "https://jpa.kapsi.fi/nanopb/download/"
@@ -12,13 +13,13 @@ class NanopbGenerator < Formula
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "4fdcfd8b50714132f4c53b99408c1df4e8f74ecd562ddf38e97828c11a459db2" => :catalina
-    sha256 "9aa621fbc7be7e43fff5622ebba5add56fdabb033088aabb3157aa7cbec60d9d" => :mojave
-    sha256 "1083d15a2b07c7f8c5e3666fcebb08fa655a48114b31b2bdc2c811c832550002" => :high_sierra
+    sha256 "c6b1966c15e3106215f753e2c6e0868522ca3292ea725cd059fab61aa83e2f3a" => :big_sur
+    sha256 "2a04a6f7da0972ce4776e49efa581b96c63b2d45c5ac52d80e20af95b722427e" => :catalina
+    sha256 "b318e0f0b96e554cb287cdebe2381e5eaa1198b9e228e07e55fdadc7bf36c5d3" => :mojave
   end
 
   depends_on "protobuf"
-  depends_on "python@3.8"
+  depends_on "python@3.9"
 
   conflicts_with "mesos",
     because: "they depend on an incompatible version of protobuf"
@@ -27,7 +28,7 @@ class NanopbGenerator < Formula
     cd "generator" do
       system "make", "-C", "proto"
       inreplace "nanopb_generator.py", %r{^#!/usr/bin/env python3$},
-                                       "#!/usr/bin/env #{Formula["python@3.8"].opt_bin}/python3"
+                                       "#!/usr/bin/env #{Formula["python@3.9"].opt_bin}/python3"
       libexec.install "nanopb_generator.py", "protoc-gen-nanopb", "proto"
       bin.install_symlink libexec/"protoc-gen-nanopb", libexec/"nanopb_generator.py"
     end

@@ -2,15 +2,15 @@ class Calicoctl < Formula
   desc "Calico CLI tool"
   homepage "https://www.projectcalico.org"
   url "https://github.com/projectcalico/calicoctl.git",
-      tag:      "v3.16.3",
-      revision: "7d066703e136723c29cebe5e7a82399bd624d226"
+      tag:      "v3.17.0",
+      revision: "0e7fc7f706cb6816f344992a2aaa161e42c7653c"
   license "Apache-2.0"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "d4fe349ec4e7531efdfe913bec603c369232c0842eb2aaca1727387deed54a23" => :catalina
-    sha256 "9a23856f66ba7c3df86da13fead3600eb86602037aa73b19a7c01274d425677d" => :mojave
-    sha256 "de7fa06489534de39c3d2aa6583240852b071b7094f9b83107dd62966d5a2616" => :high_sierra
+    sha256 "1c8ab9bc075972169714a81a0ae28d7ede8b34874e3364e2875c4cae6024f89c" => :big_sur
+    sha256 "0265695b4b17ae5a6a3ae4b425a382b95a28b655356ac1b6bfc632ba50ea3335" => :catalina
+    sha256 "2c80d37601f74353275ffcf492ca12039e3d8dfc89f9c520844bba9073a16ed1" => :mojave
   end
 
   depends_on "go" => :build

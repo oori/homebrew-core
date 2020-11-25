@@ -8,8 +8,10 @@ class JoobyBootstrap < Formula
 
   bottle :unneeded
 
-  depends_on java: "1.8"
+  deprecate! because: :unmaintained
+
   depends_on "maven"
+  depends_on "openjdk@8"
 
   def install
     libexec.install "jooby"

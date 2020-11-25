@@ -1,8 +1,8 @@
 class Node < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v14.14.0/node-v14.14.0.tar.gz"
-  sha256 "afb0b401d62d9fcfc68258f50d0bf042998d349ce9c1d7a2d45dd87870b3aab7"
+  url "https://nodejs.org/dist/v15.3.0/node-v15.3.0.tar.gz"
+  sha256 "cadfa384a5f14591b84ce07a1afe529f28deb0d43366fb0ae4e78afba96bfaf2"
   license "MIT"
   head "https://github.com/nodejs/node.git"
 
@@ -13,9 +13,9 @@ class Node < Formula
 
   bottle do
     cellar :any
-    sha256 "f1be3b305c38cc1a71cc089ec1f2983fa6b796f568aac3a6e4c93d79dc87661b" => :catalina
-    sha256 "ff29457f90b4dbf7164a3c8e1204321d3e37e33697006cab136b3e21a238fd02" => :mojave
-    sha256 "42b51e14448f7c4548effecd6f3f4c943785e122096b59ad8d4cb0b5c974faae" => :high_sierra
+    sha256 "0b11ea4bbe2e656209419a9c74dd7e24e25405c4ba0323b4c34e3532dd15ac44" => :big_sur
+    sha256 "3605db67bfb721a93c61060ef71984efda198ee2c9ad20c19d881a18c1a86879" => :catalina
+    sha256 "1be3495e7a8d8f748046de6cabd457d247a2e151c004245487d95e38dbfeedbb" => :mojave
   end
 
   depends_on "pkg-config" => :build
@@ -25,8 +25,8 @@ class Node < Formula
   # We track major/minor from upstream Node releases.
   # We will accept *important* npm patch releases when necessary.
   resource "npm" do
-    url "https://registry.npmjs.org/npm/-/npm-6.14.8.tgz"
-    sha256 "fe8e873cb606c06f67f666b4725eb9122c8927f677c8c0baf1477f0ff81f5a2c"
+    url "https://registry.npmjs.org/npm/-/npm-7.0.14.tgz"
+    sha256 "b2d07e62c187f8dcfed310cfeee6b9a87304895c2af24f6ee90dae1ed0a5ac02"
   end
 
   def install
@@ -36,9 +36,6 @@ class Node < Formula
     # Never install the bundled "npm", always prefer our
     # installation from tarball for better packaging control.
     args = %W[--prefix=#{prefix} --without-npm --with-intl=system-icu]
-    # Remove `--openssl-no-asm` workaround when upstream releases a fix
-    # See also: https://github.com/nodejs/node/issues/34043
-    args << "--openssl-no-asm" if Hardware::CPU.arm?
     args << "--tag=head" if build.head?
 
     system "./configure", *args
@@ -49,6 +46,8 @@ class Node < Formula
 
     bootstrap = buildpath/"npm_bootstrap"
     bootstrap.install resource("npm")
+    # These dirs must exists before npm install.
+    mkdir_p libexec/"lib"
     system "node", bootstrap/"bin/npm-cli.js", "install", "-ddd", "--global",
             "--prefix=#{libexec}", resource("npm").cached_download
 

@@ -1,17 +1,17 @@
 class Istioctl < Formula
   desc "Istio configuration command-line utility"
-  homepage "https://github.com/istio/istio"
+  homepage "https://istio.io/"
   url "https://github.com/istio/istio.git",
-      tag:      "1.7.3",
-      revision: "9686754643d0939c1f4dd0ee20443c51183f3589"
+      tag:      "1.8.0",
+      revision: "c87a4c874df27e37a3e6c25fa3d1ef6279685d23"
   license "Apache-2.0"
   head "https://github.com/istio/istio.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "b1dd8171a45499feace7f9e3de46fbd9bb85f8394832c136df40034e7083e5e0" => :catalina
-    sha256 "25abe707b520ccba827731425ca5f85cb8c932ae0a6555782d112099ce98ec61" => :mojave
-    sha256 "0f8724a7f358411498c9e075a3e8b0ac788f3773aa0b7ec95f2bd7a80b228e98" => :high_sierra
+    sha256 "88f6d7e0f39b30e8c332084ae13d2ccc23ca8fe076091ce69e390797acd2b253" => :big_sur
+    sha256 "1ad667d0a4b954fc76ffde408e71f63028498db1bc36ccdc46dadc9e55b70147" => :catalina
+    sha256 "b77f393e1d3add2434cf91c10647a8db06ab3db99c7efb869198c5184903a7d6" => :mojave
   end
 
   depends_on "go" => :build
@@ -32,6 +32,6 @@ class Istioctl < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/istioctl version --remote=false")
+    assert_match version.major_minor.to_s, shell_output("#{bin}/istioctl version --remote=false")
   end
 end

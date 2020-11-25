@@ -1,9 +1,9 @@
 class GnuUnits < Formula
   desc "GNU unit conversion tool"
   homepage "https://www.gnu.org/software/units/"
-  url "https://ftp.gnu.org/gnu/units/units-2.20.tar.gz"
-  mirror "https://ftpmirror.gnu.org/units/units-2.20.tar.gz"
-  sha256 "c5e298c87516711f3bedb9315583bad0965c5d3d0bb587f9837a9af12a50fadc"
+  url "https://ftp.gnu.org/gnu/units/units-2.21.tar.gz"
+  mirror "https://ftpmirror.gnu.org/units/units-2.21.tar.gz"
+  sha256 "6c3e80a9f980589fd962a5852a2674642257db1c5fd5b27c4d9e664f3486cbaf"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,9 +11,9 @@ class GnuUnits < Formula
   end
 
   bottle do
-    sha256 "8349a1d519d546b0e900099d654225f8b722549687a61b34101caddff8ea1c19" => :catalina
-    sha256 "b00474fcb014e19244ad5dee6152164c02dba0a15892cf3e7d8b7d4b3e8faecb" => :mojave
-    sha256 "eda9851ba0da4b3facfeb56f6997d075915f8b55a468c0bfaa3571839e91c750" => :high_sierra
+    sha256 "67c4941efc8a2b0b2b76193f28a83381cea01b74a2e981fb51222cc87e497aca" => :big_sur
+    sha256 "9a3735d1c7a52c9c4a1e2f81e1b0219a2621c3d32be663a085c5a1c48299a6d5" => :catalina
+    sha256 "720dc5aea47a82932ca0cb33b4a45ec3b4ac5c7910274c0dc925a371493f3b32" => :mojave
   end
 
   depends_on "readline"
@@ -22,16 +22,19 @@ class GnuUnits < Formula
     args = %W[
       --prefix=#{prefix}
       --with-installed-readline
-      --program-prefix=g
     ]
 
+    on_macos do
+      args << "--program-prefix=g"
+    end
     system "./configure", *args
     system "make", "install"
 
-    (libexec/"gnubin").install_symlink bin/"gunits" => "units"
-    (libexec/"gnubin").install_symlink bin/"gunits_cur" => "units_cur"
-    (libexec/"gnuman/man1").install_symlink man1/"gunits.1" => "units.1"
-
+    on_macos do
+      (libexec/"gnubin").install_symlink bin/"gunits" => "units"
+      (libexec/"gnubin").install_symlink bin/"gunits_cur" => "units_cur"
+      (libexec/"gnuman/man1").install_symlink man1/"gunits.1" => "units.1"
+    end
     libexec.install_symlink "gnuman" => "man"
   end
 
@@ -45,7 +48,12 @@ class GnuUnits < Formula
   end
 
   test do
-    assert_equal "* 18288", shell_output("#{bin}/gunits '600 feet' 'cm' -1").strip
-    assert_equal "* 18288", shell_output("#{opt_libexec}/gnubin/units '600 feet' 'cm' -1").strip
+    on_macos do
+      assert_equal "* 18288", shell_output("#{bin}/gunits '600 feet' 'cm' -1").strip
+      assert_equal "* 18288", shell_output("#{opt_libexec}/gnubin/units '600 feet' 'cm' -1").strip
+    end
+    on_linux do
+      assert_equal "* 18288", shell_output("#{bin}/units '600 feet' 'cm' -1").strip
+    end
   end
 end

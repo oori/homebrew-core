@@ -11,13 +11,14 @@ class Ponysay < Formula
 
     # upstream commit 16 Nov 2019, `fix: do not compare literal with "is not"`
     patch do
-      url "https://github.com/erkin/ponysay/commit/69c23e3a.diff?full_index=1"
-      sha256 "4343703851dee3ea09f153f57c4dbd1731e5eeab582d3316fbbf938f36100542"
+      url "https://github.com/erkin/ponysay/commit/69c23e3a.patch?full_index=1"
+      sha256 "2c58d5785186d1f891474258ee87450a88f799408e3039a1dc4a62784de91b63"
     end
   end
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "6a50e86cb011bd455d76f6478f230a543759fd622132914ac35c2423f63f410f" => :big_sur
     sha256 "8c53b69ff726780b68fa8d644a13325bf46b80ae13eb198804f0eb7aa601a893" => :catalina
     sha256 "d91ddb61651ee73e49f565095257cf8226d66585d8032783fe208ee359448912" => :mojave
     sha256 "ba848b6de300211972228d752805e4d4bed7ba44af9356e0f56fc6bdd9f23f79" => :high_sierra

@@ -2,9 +2,10 @@ class Juju < Formula
   desc "DevOps management tool"
   homepage "https://juju.is/"
   url "https://github.com/juju/juju.git",
-    tag:      "juju-2.8.5",
-    revision: "1f35f6a20b57aefb350f04ae74e83ace32c73094"
-  license "AGPL-3.0"
+    tag:      "juju-2.8.6",
+    revision: "5d0442d3e15952bfc0ce059cb43ef7949ca71aaa"
+  license "AGPL-3.0-only"
+  revision 1
   version_scheme 1
 
   livecheck do
@@ -14,12 +15,18 @@ class Juju < Formula
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "b463aa13e9645dfdf2cc7f469a7b758f7b2896f87cb9a2444dcb5e0eb70e9744" => :catalina
-    sha256 "b4c80be3cfb7f75600fd1c9c7e82a10068a83853436c378bdb54dce268432a3c" => :mojave
-    sha256 "25900f4fd162c99326e743c181cbb0ca0aa669f7fbeb89229785018ba56d9924" => :high_sierra
+    sha256 "5aaabdd93f04979ca322804b7e5f748eca3d725b4e7e0edd9bbbfde555a374ef" => :big_sur
+    sha256 "81166cd79c3370366659e16fb9e3dac22319be350225654d302659dd54a4dcf5" => :catalina
+    sha256 "3a49f2c755bb81a4625dca0f41172eaf367b8a41e8bc943f021112c07894cffb" => :mojave
   end
 
   depends_on "go" => :build
+
+  # Fixed in next 2.8.x release.
+  patch do
+    url "https://github.com/juju/juju/commit/29afb4b7fdbaa70a3e1a2c596e46a0c7962303a4.patch?full_index=1"
+    sha256 "edb6337d7bb75ae053eecbcf5704a4165130241b302832484ece19b5183c3ca7"
+  end
 
   def install
     git_commit = Utils.safe_popen_read("git", "rev-parse", "HEAD").chomp

@@ -36,6 +36,8 @@ class Ntfs3g < Formula
     depends_on "libtool" => :build
   end
 
+  deprecate! because: "requires FUSE"
+
   depends_on "pkg-config" => :build
   depends_on "coreutils" => :test
   depends_on "gettext"
@@ -80,6 +82,7 @@ class Ntfs3g < Formula
           -o volname="${VOLUME_NAME}" \\
           -o local \\
           -o negative_vncache \\
+          -o auto_xattr \\
           -o auto_cache \\
           -o noatime \\
           -o windows_names \\

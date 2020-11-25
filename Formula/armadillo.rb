@@ -1,8 +1,8 @@
 class Armadillo < Formula
   desc "C++ linear algebra library"
   homepage "https://arma.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/arma/armadillo-9.900.3.tar.xz"
-  sha256 "d615e736852a74b1753d217718e20f0d8dc4958ccc6dc975030563e18783fc0a"
+  url "https://downloads.sourceforge.net/project/arma/armadillo-10.1.2.tar.xz"
+  sha256 "96ef79b65c9cecbfcafac6113da85e695c97e796ffffd04b4280c7a8daf5635d"
   license "Apache-2.0"
 
   livecheck do
@@ -12,9 +12,10 @@ class Armadillo < Formula
 
   bottle do
     cellar :any
-    sha256 "38c123ba25c7b130e76697944a1a1ea0531d450eedde4a9518be6f72798efcc0" => :catalina
-    sha256 "0a0a49d08b26352c259f41642032278571d3dc1a9162637bfe7b0d95f495ff3a" => :mojave
-    sha256 "cdb4062c597ed78f51c8a9486a8b512c65a34817e3a73bb7998cbdaca2519cee" => :high_sierra
+    sha256 "02975e5c376769d1d3a1cd7c6b04e49e19c78e331aec08d7a262061540a467a6" => :big_sur
+    sha256 "9b87b8586a1ca8f0b24e448004956588f918bb407bfc3b8ed7dd3f5263408400" => :catalina
+    sha256 "9ffb259fb092520458e93f2065f6fbaae2e66414a0708ae45147c40b0bddf1f0" => :mojave
+    sha256 "314cefb9fa4143d92ae255e2903ca3fb5d21b4d8cf7228f4460174e8ce341938" => :high_sierra
   end
 
   depends_on "cmake" => :build
@@ -41,7 +42,7 @@ class Armadillo < Formula
         std::cout << arma::arma_version::as_string() << std::endl;
       }
     EOS
-    system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}", "-larmadillo", "-o", "test"
+    system ENV.cxx, "-std=c++11", "test.cpp", "-I#{include}", "-L#{lib}", "-larmadillo", "-o", "test"
     assert_equal shell_output("./test").to_i, version.to_s.to_i
   end
 end

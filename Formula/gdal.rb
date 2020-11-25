@@ -1,10 +1,9 @@
 class Gdal < Formula
   desc "Geospatial Data Abstraction Library"
   homepage "https://www.gdal.org/"
-  url "https://download.osgeo.org/gdal/3.1.3/gdal-3.1.3.tar.xz"
-  sha256 "161cf55371a143826f1d76ce566db1f0a666496eeb4371aed78b1642f219d51d"
+  url "https://download.osgeo.org/gdal/3.2.0/gdal-3.2.0.tar.xz"
+  sha256 "b051f852600ffdf07e337a7f15673da23f9201a9dbb482bd513756a3e5a196a6"
   license "MIT"
-  revision 3
 
   livecheck do
     url "https://download.osgeo.org/gdal/CURRENT/"
@@ -12,9 +11,10 @@ class Gdal < Formula
   end
 
   bottle do
-    sha256 "64a8b994f4caaa431c4bf2fa55737c205f7bbc4c8cabfa7868259a093fd82f81" => :catalina
-    sha256 "9d6ce11fcb8008f7df4e45ebdc5abff1e171f6f58bd975ef80fa94572fa4d92b" => :mojave
-    sha256 "f7bd35d249b4cd714726afe84e1dae7e93d782efe1c0192518e20791a1f34b06" => :high_sierra
+    sha256 "fb1c58e1f7a06f89a744e4f55cce483cb9cc7fddb2bbf747e1665eafd5066855" => :big_sur
+    sha256 "2a74c66bb4dd479b809bcaee9b2ed31afbadb26d2fed57cbb96bf81420d50265" => :catalina
+    sha256 "1d0bd96e0edf8f85bbadc47a12a3b3f71f3d1b1458f904df5eb3c6223ef4f479" => :mojave
+    sha256 "d00526a862cae5b405f2cee3d2dfab285d4cdfcfa921e9ac7bdeeb5bcf61fe9d" => :high_sierra
   end
 
   head do
@@ -46,7 +46,7 @@ class Gdal < Formula
   depends_on "pcre"
   depends_on "poppler"
   depends_on "proj"
-  depends_on "python@3.8"
+  depends_on "python@3.9"
   depends_on "sqlite" # To ensure compatibility with SpatiaLite
   depends_on "unixodbc" # macOS version is not complete enough
   depends_on "webp"
@@ -151,7 +151,7 @@ class Gdal < Formula
 
     # Build Python bindings
     cd "swig/python" do
-      system Formula["python@3.8"].opt_bin/"python3", *Language::Python.setup_install_args(prefix)
+      system Formula["python@3.9"].opt_bin/"python3", *Language::Python.setup_install_args(prefix)
     end
     bin.install Dir["swig/python/scripts/*.py"]
 
@@ -166,7 +166,7 @@ class Gdal < Formula
     # basic tests to see if third-party dylibs are loading OK
     system "#{bin}/gdalinfo", "--formats"
     system "#{bin}/ogrinfo", "--formats"
-
-    system Formula["python@3.8"].opt_bin/"python3", "-c", "import gdal"
+    # Changed Python package name from "gdal" to "osgeo.gdal" in 3.2.0.
+    system Formula["python@3.9"].opt_bin/"python3", "-c", "import osgeo.gdal"
   end
 end

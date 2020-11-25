@@ -5,7 +5,7 @@ class Csound < Formula
     tag:      "6.15.0",
     revision: "18c2c7897425f462b9a7743cee157cb410c88198"
   license "LGPL-2.1-or-later"
-  revision 1
+  revision 3
   head "https://github.com/csound/csound.git", branch: "develop"
 
   livecheck do
@@ -14,9 +14,9 @@ class Csound < Formula
   end
 
   bottle do
-    sha256 "d0d9f99b5afdecb3df96968a547b907862c721c6ef903d4681df0036d1f5ac07" => :catalina
-    sha256 "b78a4d843e44cb5fa29122647abf2fa544e944b22e3b6637dc8e665e17db14d5" => :mojave
-    sha256 "9393b139b0ca4bcef998414750066c8539bc37aa299d962407f5e5cf5c712511" => :high_sierra
+    sha256 "fe156a8b5d87b8339fc8a0176c29a2ceaa5b0e41f8abac916585eaf1dc0eca41" => :catalina
+    sha256 "d5c6e5ef29d0d16e33ba5ca97869fca304e73ce223fbcaddf8b423bf7fe39729" => :mojave
+    sha256 "1a3c4ff27f85e70974ff6b66e3d6daab7b2ec7ddd411c31cd36a7a868caaaa82" => :high_sierra
   end
 
   depends_on "asio" => :build
@@ -88,7 +88,7 @@ class Csound < Formula
 
     libexec.install buildpath/"interfaces/ctcsound.py"
 
-    python_version = Language::Python.major_minor_version Formula["python@3.8"].bin/"python3"
+    python_version = Language::Python.major_minor_version Formula["python@3.9"].bin/"python3"
     (lib/"python#{python_version}/site-packages/homebrew-csound.pth").write <<~EOS
       import site; site.addsitedir('#{libexec}')
     EOS
@@ -153,7 +153,7 @@ class Csound < Formula
     system bin/"csound", "--orc", "--syntax-check-only", "opcode-existence.orc"
 
     with_env("DYLD_FRAMEWORK_PATH" => frameworks) do
-      system Formula["python@3.8"].bin/"python3", "-c", "import ctcsound"
+      system Formula["python@3.9"].bin/"python3", "-c", "import ctcsound"
     end
 
     (testpath/"test.java").write <<~EOS

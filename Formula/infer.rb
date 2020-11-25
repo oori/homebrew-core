@@ -6,6 +6,7 @@ class Infer < Formula
       tag:      "v0.17.0",
       revision: "99464c01da5809e7159ed1a75ef10f60d34506a4"
   license "MIT"
+  revision 1
 
   livecheck do
     url :stable
@@ -20,15 +21,17 @@ class Infer < Formula
     sha256 "7630571f8e391ce0ba991ffe7a5d7b2b4a1029cda1d56497800d8ae0a260d4b6" => :high_sierra
   end
 
+  deprecate! because: :does_not_build
+
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "cmake" => :build
-  depends_on java: ["1.8", :build, :test]
   depends_on "libtool" => :build
   depends_on "ocaml" => :build
   depends_on "ocaml-findlib" => :build
   depends_on "ocaml-num" => :build
   depends_on "opam" => :build
+  depends_on "openjdk@8" => [:build, :test]
   depends_on "pkg-config" => :build
   depends_on "gmp"
   depends_on :macos # Due to Python 2 (https://github.com/facebook/infer/issues/934)

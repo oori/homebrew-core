@@ -1,15 +1,15 @@
 class Gitversion < Formula
   desc "Easy semantic versioning for projects using Git"
   homepage "https://gitversion.net"
-  url "https://github.com/GitTools/GitVersion/archive/5.3.7.tar.gz"
-  sha256 "70c6f867e4a85325ba1e54211fd014d9b3ec9be43bb828393e1f0d6a5e33cefb"
+  url "https://github.com/GitTools/GitVersion/archive/5.5.1.tar.gz"
+  sha256 "915e6eed296652072c0060a79ff8d665c348cc3e386d969fd45a1df615609777"
   license "MIT"
 
   bottle do
     cellar :any
-    sha256 "807c000e45f4e0933fbc4295b55ce83ce4174bfb74a34c141fa2a42f863dc592" => :catalina
-    sha256 "bfb552cda166ba379fb8dbf5a4e0d2689959f4c21bd94a5da5872e37143babe8" => :mojave
-    sha256 "c88bbdf084a9bcd227d4e1f66b851aad65692e6d630bda57e703a6af925391d4" => :high_sierra
+    sha256 "902c15e068c707f92083405d1bff5dc664ba4e77e944ca043c133220590dcf31" => :big_sur
+    sha256 "6b2c74883286d8f515df9dc97fcb5342a9e720fee675e0947b1184110a7ce24e" => :catalina
+    sha256 "8fc7140f2c3ae4a8828a7da95a4a0af5149d8156025b41ad2889f6ac2d71061e" => :mojave
   end
 
   depends_on "dotnet"
@@ -35,8 +35,10 @@ class Gitversion < Formula
 
     (testpath/"test.txt").write("test")
     system "git", "init"
+    system "git", "config", "user.name", "Test"
+    system "git", "config", "user.email", "test@example.com"
     system "git", "add", "test.txt"
-    system "git", "commit", "-q", "--author='Test <test@example.com>'", "--message='Test'"
+    system "git", "commit", "-q", "--message='Test'"
     assert_match '"FullSemVer":"0.1.0+0"', shell_output("#{bin}/gitversion -output json")
   end
 end

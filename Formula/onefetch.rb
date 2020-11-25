@@ -1,15 +1,15 @@
 class Onefetch < Formula
   desc "Git repository summary on your terminal"
   homepage "https://github.com/o2sh/onefetch"
-  url "https://github.com/o2sh/onefetch/archive/v2.4.0.tar.gz"
-  sha256 "ea7b2c0a3742a110a60528df7fb05647ea87d41fe22de1de3be61d310486ae0d"
+  url "https://github.com/o2sh/onefetch/archive/v2.7.3.tar.gz"
+  sha256 "c0d8ccfe7addf6112737c0e4681c8a418580e234708c322aae329bc3ad10cf5b"
   license "MIT"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "0c248e34afdde7ce7756a07f8adcfac526d94bdb3378daf85d44defda60cc041" => :catalina
-    sha256 "ddbe1f6ca29ffe3789c390142ff92799d39b58fce8b20be5c751a37d312960e5" => :mojave
-    sha256 "869230c06e81e477ba6a9b1be1b770f49431e62297183f63ec3c497bae546301" => :high_sierra
+    sha256 "2feadcb1d54d9b0a9121766ca7102908500f58438cb3b621cb2a0f6989eff8ab" => :big_sur
+    sha256 "6644aa90d4efb85e61aa3eb5dc5ee07833b77f756de708ccae21c8f9134077ca" => :catalina
+    sha256 "d6f3c70a938a8b7412c21fb3ba148c2b8726c960d3808f793e3d301b0d163ad3" => :mojave
   end
 
   depends_on "rust" => :build
@@ -23,7 +23,11 @@ class Onefetch < Formula
   test do
     system "#{bin}/onefetch", "--help"
     assert_match "onefetch " + version.to_s, shell_output("#{bin}/onefetch -V").chomp
-    system "git init && echo \"puts 'Hello, world'\" > main.rb && git add main.rb && git commit -m \"First commit\""
+
+    system "git init"
+    system "git", "config", "user.name", "BrewTestBot"
+    system "git", "config", "user.email", "BrewTestBot@test.com"
+    system "echo \"puts 'Hello, world'\" > main.rb && git add main.rb && git commit -m \"First commit\""
     assert_match /Language:.*Ruby/, shell_output("#{bin}/onefetch").chomp
   end
 end

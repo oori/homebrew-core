@@ -6,17 +6,18 @@ class Gitless < Formula
   url "https://github.com/gitless-vcs/gitless/archive/v0.8.8.tar.gz"
   sha256 "470aab13d51baec2ab54d7ceb6d12b9a2937f72d840516affa0cb34a6360523c"
   license "MIT"
-  revision 4
+  revision 5
 
   bottle do
     cellar :any
-    sha256 "c0ffed9f5228aecb14175929167812114176ac2df5b9583161c4f3c0f7785da0" => :catalina
-    sha256 "f72efc4323f531adcb1a38c8d864a4bd464b4a7d67400623479f05d37a4332cd" => :mojave
-    sha256 "aa526af3aaa79be5c7d86d4265589194e331766ba138e5b74894ad8037224c5c" => :high_sierra
+    sha256 "9ca28c418907eaa451a7483a051c05ca3e86060c00d947ca87ce355b3c236cc8" => :big_sur
+    sha256 "432e8def4fbdbacd852c7fbe73e07b944944cc158c68411fe0e5b66eae211af6" => :catalina
+    sha256 "58e252568106a770468e797e6e7465fe4d32bc2d864fe3555860462473207167" => :mojave
+    sha256 "a37306f3da4f7af63c3d009d5cf6b3f75d1c57446adf5fb03c6cfd4dd6999f91" => :high_sierra
   end
 
   depends_on "libgit2"
-  depends_on "python@3.8"
+  depends_on "python@3.9"
 
   uses_from_macos "libffi"
 
@@ -67,8 +68,8 @@ class Gitless < Formula
   # Allow to be dependent on pygit2 1.1.1
   # Remove for next version
   patch do
-    url "https://github.com/gitless-vcs/gitless/commit/daf352cae1f830bd4ca9adc949884b606cccdf49.diff?full_index=1"
-    sha256 "a8ef93c73a9055d59b496b1c8a1a78f42f8743b4224dd676dbe1b29ab086b3b4"
+    url "https://github.com/gitless-vcs/gitless/commit/daf352cae1f830bd4ca9adc949884b606cccdf49.patch?full_index=1"
+    sha256 "fd4ef60552add5f95944083a8ba867a3b34a197bdbad6b13afcf5ab29ebe09be"
   end
 
   def install

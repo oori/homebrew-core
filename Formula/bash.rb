@@ -12,6 +12,14 @@ class Bash < Formula
     sha256 "b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d"
     version "5.0.18"
 
+    # Fix configure detection of strsignal() and snprintf() with Xcode 12
+    # Remove for version 5.1
+    # https://savannah.gnu.org/patch/index.php?9991
+    patch do
+      url "https://raw.githubusercontent.com/Homebrew/formula-patches/cda4fced/bash/bash.patch"
+      sha256 "4c478ecedcc33efa1b71679d479453940fb3a210709cd03a00c2b56e64328631"
+    end
+
     %w[
       001 f2fe9e1f0faddf14ab9bfa88d450a75e5d028fedafad23b88716bd657c737289
       002 87e87d3542e598799adb3e7e01c8165bc743e136a400ed0de015845f7ff68707
@@ -48,9 +56,11 @@ class Bash < Formula
   end
 
   bottle do
-    sha256 "c6e7b7a521a1cfb21f2872bde253bfd40150bd4ba36ada62c05fcdb73ae094c6" => :catalina
-    sha256 "ba0617f6d3f4e691f9863e2f73596da94671f4c0ca21a95b99f19eced315f2d4" => :mojave
-    sha256 "46023d0bafe68b838ada45ff6a66e63f7eac814eeb84e15a09d4b84a790ef49d" => :high_sierra
+    rebuild 2
+    sha256 "75e4b534d6399eb38d6d21bd4733168ef5ea66fb366155bb3dcd38e90497f782" => :big_sur
+    sha256 "6a701a90139e32ff22532978c5280548a2d32b96944c2b3cb1beedd912eda827" => :catalina
+    sha256 "1c163d25e8d1fe1e7d5083813e5e534ca708afcbf054017b66781a056e84ad79" => :mojave
+    sha256 "9a6e6c9d160358efc23ef4d471cc423d22b3a3fd14f6324aed3810656acf67a7" => :high_sierra
   end
 
   def install
@@ -61,6 +71,11 @@ class Bash < Formula
     # things (e.g. git+ssh) will break if the user sets their default shell to
     # Homebrew's bash instead of /bin/bash.
     ENV.append_to_cflags "-DSSH_SOURCE_BASHRC"
+
+    # Work around configure issues with Xcode 12
+    # https://savannah.gnu.org/patch/index.php?9991
+    # Remove for version 5.1
+    ENV.append "CFLAGS", "-Wno-implicit-function-declaration"
 
     system "./configure", "--prefix=#{prefix}"
     system "make", "install"

@@ -1,28 +1,34 @@
 class Rclone < Formula
   desc "Rsync for cloud storage"
   homepage "https://rclone.org/"
-  url "https://github.com/rclone/rclone/archive/v1.53.1.tar.gz"
-  sha256 "b606ebb82bf76cf7e050aaa7bfcc1a688783ec5a4c71a6c3df6aa2f73fe6c8c1"
+  url "https://github.com/rclone/rclone/archive/v1.53.2.tar.gz"
+  sha256 "63c499cef3b216aa657b70ac8217b69f6b1925781d4d8881054194664462d4f1"
   license "MIT"
   head "https://github.com/rclone/rclone.git"
 
   bottle do
     cellar :any_skip_relocation
     rebuild 1
-    sha256 "3c9040c1cb227bcd2c42681b51e08477a399fe012abf5721a9821d863bc722ac" => :catalina
-    sha256 "4a5c527e176a804b81ed291f3dec0ea43b03ffe14f86f4aff8f91d72c53c4c2d" => :mojave
-    sha256 "2aa23e60997424d9051c70c7f13ae83ed4b58d1d95eaf511323698b4b0add17f" => :high_sierra
+    sha256 "4346e37a24fad485a91e2a5ac7a083cd191f64cbe5ec220f51ed019127329e87" => :big_sur
+    sha256 "9591cd57d0491adf64e65218b87f123ffcb46ccc1281baf53c35f773080805a2" => :catalina
+    sha256 "acc6f0a73e589b51f82b7e0bb4ec8d09e36b020031ff59ed8a2e99956c64cd19" => :mojave
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", "-tags", "cmount", *std_go_args
+    system "go", "build", "-tags", "brew", *std_go_args
     man1.install "rclone.1"
     system bin/"rclone", "genautocomplete", "bash", "rclone.bash"
     system bin/"rclone", "genautocomplete", "zsh", "_rclone"
     bash_completion.install "rclone.bash" => "rclone"
     zsh_completion.install "_rclone"
+  end
+
+  def caveats
+    <<~EOS
+      Homebrew's installation does not include the `mount` subcommand.
+    EOS
   end
 
   test do

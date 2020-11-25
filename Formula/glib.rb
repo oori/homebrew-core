@@ -3,18 +3,20 @@ class Glib < Formula
 
   desc "Core application library for C"
   homepage "https://developer.gnome.org/glib/"
-  url "https://download.gnome.org/sources/glib/2.66/glib-2.66.1.tar.xz"
-  sha256 "a269ffe69fbcc3a21ff1acb1b6146b2a5723499d6e2de33ae16ccb6d2438ef60"
+  url "https://download.gnome.org/sources/glib/2.66/glib-2.66.2.tar.xz"
+  sha256 "ec390bed4e8dd0f89e918f385e8d4cfd7470b1ef7c1ce93ec5c4fc6e3c6a17c4"
   license "LGPL-2.1-or-later"
+  revision 1
 
   livecheck do
     url :stable
   end
 
   bottle do
-    sha256 "262f87a82d6409a34bec932f4bfae6c30fa8a39c8886161dd46043243ffcdd9f" => :catalina
-    sha256 "202946f77d5bde6c9bad1f3bad818bc0f01b2493a7c826dbd4a18bd451410f97" => :mojave
-    sha256 "8457442f4db9c331cabeca46344354b5177ff0cc54bef1d3ede8981aeda84b6b" => :high_sierra
+    sha256 "43eb87fa1004b3c5329ca342ea681b243423818002a08f9cdf37125356563438" => :big_sur
+    sha256 "55989b3ad3b8da0314749ab1abf699beecfa19479a4bbbc47e981aa282840fe1" => :catalina
+    sha256 "0715e8debe9a6a1e1f8223759a29c300eccb151c2fd5e4c376f8f71636501e0d" => :mojave
+    sha256 "f7c78253be38a52794ff424dcf493d60bd9a2534e49043b88ff2e75906bc17c6" => :high_sierra
   end
 
   depends_on "meson" => :build
@@ -23,7 +25,7 @@ class Glib < Formula
   depends_on "gettext"
   depends_on "libffi"
   depends_on "pcre"
-  depends_on "python@3.8"
+  depends_on "python@3.9"
 
   on_linux do
     depends_on "util-linux"

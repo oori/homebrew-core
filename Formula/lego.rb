@@ -2,15 +2,15 @@ class Lego < Formula
   desc "Let's Encrypt client"
   homepage "https://go-acme.github.io/lego/"
   url "https://github.com/go-acme/lego.git",
-    tag:      "v4.0.1",
-    revision: "99b2cd818167175c8933ff121e613f8b68690f0e"
+    tag:      "v4.1.2",
+    revision: "721cfb5fe2d4d32043f5994e2a38473a86365802"
   license "MIT"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "f4811a1694e1bfe2dbb2fef4ea3a44cbb0d6cba4940b3c4f904f515d2c3d7469" => :catalina
-    sha256 "7dfbb0d990526cbd5f6db396cf16eada4f6675021f9917eab7db050f8bb21fc1" => :mojave
-    sha256 "7946ea0f32c17de5af07144533fb9982b0183bfa1973e3c0e1f48ce1d49cce3a" => :high_sierra
+    sha256 "e0916a9d389c78ea43c2507ba315ab3fe2b6967319dd67940a7f410de518a6b5" => :big_sur
+    sha256 "246dccf11c20bf7d51cbfd3a33dcb64a024865df646cb98751d7fe74016b25eb" => :catalina
+    sha256 "8026cdd3367a91bf958cabb0eae75350f9f66a597708c7eef950bb7201085476" => :mojave
   end
 
   depends_on "go" => :build

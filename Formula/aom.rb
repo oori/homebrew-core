@@ -9,6 +9,7 @@ class Aom < Formula
   bottle do
     cellar :any_skip_relocation
     rebuild 1
+    sha256 "a8e7c5f46fa775fa055c5c906dcc0919cc8336bbba9f5babb146b1d3351e17d7" => :big_sur
     sha256 "c4a83e9bc36bc1fe6633d8a4fef10436e5c79e825352e6562d776dcff6dbcd08" => :catalina
     sha256 "96537ef620ea5035ffbb643db83edc9fc7e7995fbcd08ebd16fef74d5e17b411" => :mojave
     sha256 "39d14687b9a45a50f921a19e23b935799d052686854bb247ed59235bcc28c59d" => :high_sierra
@@ -23,10 +24,6 @@ class Aom < Formula
   end
 
   def install
-    # Work around Xcode 11 clang bug
-    # https://bitbucket.org/multicoreware/x265/issues/514/wrong-code-generated-on-macos-1015
-    ENV.append_to_cflags "-fno-stack-check" if DevelopmentTools.clang_build_version >= 1010
-
     mkdir "macbuild" do
       args = std_cmake_args.concat(["-DENABLE_DOCS=off",
                                     "-DENABLE_EXAMPLES=on",

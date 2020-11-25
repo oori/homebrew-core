@@ -2,15 +2,20 @@ class FaasCli < Formula
   desc "CLI for templating and/or deploying FaaS functions"
   homepage "https://www.openfaas.com/"
   url "https://github.com/openfaas/faas-cli.git",
-      tag:      "0.12.14",
-      revision: "c12d57c39ac4cc6eef3c9bba2fb45113d882432f"
+      tag:      "0.12.19",
+      revision: "c9d284d0c5bd90415baf9130fdce55af8e5a506b"
   license "MIT"
+
+  livecheck do
+    url "https://github.com/openfaas/faas-cli/releases/latest"
+    regex(%r{href=.*?/tag/v?(\d+(?:\.\d+)+)["' >]}i)
+  end
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "7051bca10bfdfd1ef4e7fe687494eecf5df77827a44a08c94cba9f4851e52120" => :catalina
-    sha256 "bdca47be1908c16bcf727414edfcfb6a17b959e4b426ac793c3afbfc2e167aa2" => :mojave
-    sha256 "cfd299020e90768c1ad8536ef1be86b0f882d206524866f89f82bffc58a39fc0" => :high_sierra
+    sha256 "b3ca61ed727c74736adfb9f24124b4005286dfd70b70762b5e01e0e8aa799779" => :big_sur
+    sha256 "c3367e1eb3f7bd284e538c82977c358db1b3a26ad323628265a403b76335ee42" => :catalina
+    sha256 "2cccad05207a43fd7096875aa432f35c8093242b80c6b15e90d5e05846db889a" => :mojave
   end
 
   depends_on "go" => :build
@@ -47,7 +52,7 @@ class FaasCli < Formula
     (testpath/"test.yml").write <<~EOS
       provider:
         name: openfaas
-        gateway: http://localhost:#{port}
+        gateway: https://localhost:#{port}
         network: "func_functions"
 
       functions:
@@ -58,15 +63,14 @@ class FaasCli < Formula
     EOS
 
     begin
-      output = shell_output("#{bin}/faas-cli deploy -yaml test.yml 2>&1", 1)
+      output = shell_output("#{bin}/faas-cli deploy --tls-no-verify -yaml test.yml 2>&1", 1)
       assert_match "stat ./template/python/template.yml", output
 
       assert_match "ruby", shell_output("#{bin}/faas-cli template pull 2>&1")
       assert_match "node", shell_output("#{bin}/faas-cli new --list")
 
-      output = shell_output("#{bin}/faas-cli deploy -yaml test.yml")
-      assert_match "Function dummy_function already exists, attempting rolling-update", output
-      assert_match "Deployed. 200 OK", output
+      output = shell_output("#{bin}/faas-cli deploy --tls-no-verify -yaml test.yml", 1)
+      assert_match "Deploying: dummy_function.", output
 
       stable_resource = stable.instance_variable_get(:@resource)
       commit = stable_resource.instance_variable_get(:@specs)[:revision]

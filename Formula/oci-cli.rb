@@ -3,16 +3,16 @@ class OciCli < Formula
 
   desc "Oracle Cloud Infrastructure CLI"
   homepage "https://docs.cloud.oracle.com/iaas/Content/API/Concepts/cliconcepts.htm"
-  url "https://files.pythonhosted.org/packages/b1/f4/dc1ae80fe0f962179461a479fdbe0d262efc6574da905c6986f8477c49a0/oci-cli-2.13.0.tar.gz"
-  sha256 "9a3f3111948e91c33932f704191b597d82c8bd5d4d249dd4d2cbf45b38e89a9a"
+  url "https://files.pythonhosted.org/packages/9d/d0/3fa3d2ccc740e878e9f9fd6aa7c47de0842d17b043c4d6576009f1a0b77f/oci-cli-2.15.0.tar.gz"
+  sha256 "852f46dd215a05900ea0696d54132f04bd290cec230de7463200bc49c30b448c"
   license any_of: ["UPL-1.0", "Apache-2.0"]
   head "https://github.com/oracle/oci-cli.git"
 
   bottle do
     cellar :any
-    sha256 "15ec4d902ade252a0932302514c6667a55157d243da71dd28c388ead272f9d77" => :catalina
-    sha256 "03c537079d196452132117ca8556418996445ed2424c420212f304455236b26e" => :mojave
-    sha256 "be52b940f4a30cf9185b33de47b1e765d4ebb1abe9917f3a7aaad9d4ddd0cd45" => :high_sierra
+    sha256 "6e129ed2da62b34ca7db62059af57b532e2caec6f16374d4e97cbd92333f7ebc" => :big_sur
+    sha256 "34eddc8a733c615cfd62e16317026755bb259e635d018b6c52baf32fc9d21690" => :catalina
+    sha256 "c5ba3ae4abb74e4a235bcf9d0d05903a000bc43a8eb2242a1050f92048c409e5" => :mojave
   end
 
   depends_on "python@3.9"
@@ -23,8 +23,8 @@ class OciCli < Formula
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/40/a7/ded59fa294b85ca206082306bba75469a38ea1c7d44ea7e1d64f5443d67a/certifi-2020.6.20.tar.gz"
-    sha256 "5930595817496dd21bb8dc35dad090f1c2cd0adfaf21204bf6732ca5d8ee34d3"
+    url "https://files.pythonhosted.org/packages/e6/de/879cf857ae6f890dfa23c3d6239814c5471936b618c8fb0c8732ad5da885/certifi-2020.11.8.tar.gz"
+    sha256 "f05def092c44fbf25834a51509ef6e631dc19765ab8a57b4e7ab85531f0a9cf4"
   end
 
   resource "cffi" do
@@ -53,8 +53,8 @@ class OciCli < Formula
   end
 
   resource "oci" do
-    url "https://files.pythonhosted.org/packages/19/ed/2f0fd9321fafbe00c5171dbd3c08c84f56067b7c7b5289b246e2cec16d7d/oci-2.22.0.tar.gz"
-    sha256 "b86652019a4598e003ad8d2b90f3f6412ff68a153bbe1185b9d31fc897521b30"
+    url "https://files.pythonhosted.org/packages/4f/4b/94106909d482bbe2de7c27cc14959d5b77dfe523c7fa11873af77ecb6b4f/oci-2.24.0.tar.gz"
+    sha256 "d76f66c118596dc08a84db64409ec370a7e146944292e2a533dac3236689ff44"
   end
 
   resource "pycparser" do
@@ -73,8 +73,8 @@ class OciCli < Formula
   end
 
   resource "pytz" do
-    url "https://files.pythonhosted.org/packages/f4/f6/94fee50f4d54f58637d4b9987a1b862aeb6cd969e73623e02c5c00755577/pytz-2020.1.tar.gz"
-    sha256 "c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048"
+    url "https://files.pythonhosted.org/packages/09/07/448a8887c7195450604dfc0305d80d74324c36ee18ed997664051d4bffe3/pytz-2020.4.tar.gz"
+    sha256 "3e6b7dd2d1e0a59084bcee14a17af60c5c562cdc16d828e8eba2e683d3a7e268"
   end
 
   resource "PyYAML" do
@@ -98,13 +98,7 @@ class OciCli < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python3")
-    system libexec/"bin/pip", "install", "-v", "--no-binary", ":all:",
-                                "--ignore-installed", buildpath
-
-    venv.pip_install_and_link buildpath
-
-    bin.install_symlink libexec/"bin/oci"
+    virtualenv_install_with_resources
   end
 
   test do

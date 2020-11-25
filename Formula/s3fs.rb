@@ -13,6 +13,8 @@ class S3fs < Formula
     sha256 "f475d03b68102dd400a22de99b9ddc044653f6658e2cb84349adf507ffbddcad" => :high_sierra
   end
 
+  deprecate! because: "requires FUSE"
+
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "pkg-config" => :build

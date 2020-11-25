@@ -11,8 +11,8 @@ class Watchman < Formula
 
     # Upstream commit from 1 Sep 2017: "Have bin scripts use iter() method for python3"
     patch do
-      url "https://github.com/facebook/watchman/commit/17958f7d.diff?full_index=1"
-      sha256 "edad4971fceed2aecfa2b9c3e8e22c455bfa073732a3a0c77b030e506ee860af"
+      url "https://github.com/facebook/watchman/commit/17958f7d.patch?full_index=1"
+      sha256 "73990f0c7bd434d04fd5f1310b97c5f8599793007bd31ae438c2ba0211fb2c43"
     end
   end
 
@@ -24,6 +24,7 @@ class Watchman < Formula
   end
 
   bottle do
+    sha256 "f03c91e17cd7595f98106ee4a27f28433ecc2fd6dde8cc1b7e279bd60b730051" => :big_sur
     sha256 "30ed7115aa2a2534f5255508915f827c2e6f3100fcd7842415db64e31eabac30" => :catalina
     sha256 "135eb0a8f098417a8e4d67bf8d732a19bad1932eee085497877e93982e91074f" => :mojave
     sha256 "e872c3aae64c3b78197de9f12e272bebd5d20c316a120916f59a5f1cd2fac039" => :high_sierra

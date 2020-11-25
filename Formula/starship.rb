@@ -1,24 +1,31 @@
 class Starship < Formula
   desc "Cross-shell prompt for astronauts"
   homepage "https://starship.rs"
-  url "https://github.com/starship/starship/archive/v0.46.2.tar.gz"
-  sha256 "39301c8118239eda7b6d8dbcae498f28bfd901932e69003c249d99ee7989c1bb"
+  url "https://github.com/starship/starship/archive/v0.47.0.tar.gz"
+  sha256 "9c9ede1eb7a9e1acf49f0321915232426c234b356c6bb1f740d15d6fa45d1bee"
   license "ISC"
   head "https://github.com/starship/starship.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "eee2a63efffe4ce8672b11bddb3e905749a02a8e599d39df5ff0b8fceb07c63f" => :catalina
-    sha256 "c0177cb35d9ed34b2b9d6723b220d3cc7e37f5fb839dd2426b91c64f63d6f999" => :mojave
-    sha256 "77d533c2e216c0783e4a5465ea2f5300576769696ba309f9274e34b81ae54720" => :high_sierra
+    sha256 "ef2640a4e925f13181ec7a56fd8f5e51e0172a166a152a3bc452abee714b7174" => :big_sur
+    sha256 "88f7df8f093c0c700998ae44245cd37899c054a3009d1b24404722ca64c0afde" => :catalina
+    sha256 "1411ed938013786d86b1c267e14eec81daf4c7ff8a02ee0e0bbf99b1f30b17b2" => :mojave
+    sha256 "551d40dac8dbb67a56e6ff643ca61abfa8aa18034e3dd1a6e50368291faf3d9a" => :high_sierra
   end
 
   depends_on "rust" => :build
+  depends_on "openssl@1.1"
 
   uses_from_macos "zlib"
 
+  on_linux do
+    depends_on "pkg-config" => :build
+    depends_on "dbus"
+  end
+
   def install
-    system "cargo", "install", *std_cargo_args
+    system "cargo", "install", "--features", "notify-rust", *std_cargo_args
 
     bash_output = Utils.safe_popen_read("#{bin}/starship", "completions", "bash")
     (bash_completion/"starship").write bash_output

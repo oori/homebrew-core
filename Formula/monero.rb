@@ -2,15 +2,16 @@ class Monero < Formula
   desc "Official Monero wallet and CPU miner"
   homepage "https://www.getmonero.org/"
   url "https://github.com/monero-project/monero.git",
-      tag:      "v0.17.1.0",
-      revision: "4d855fcca7db286484c256d85619c051a55592ad"
+      tag:      "v0.17.1.3",
+      revision: "f690e4984d74c6ff1ef503f4b4524f91d811374d"
   license "BSD-3-Clause"
+  revision 1
 
   bottle do
     cellar :any
-    sha256 "dd02d8b0db72b793872929ac1c606ba7a0f361200261be19b2fe5becc203e431" => :catalina
-    sha256 "23adcdad8c794875e69b1d54d4d31e6d29b40a19af183bf6dac53ddbd53ba59e" => :mojave
-    sha256 "fdd12348179a711ee29aa33317f2be54026e33a8d64355ebfa33065aa737a68b" => :high_sierra
+    sha256 "974dfea5ebc07adf056136cd7c36a6a6fee4115b4b7171a65f1254df68f9752a" => :big_sur
+    sha256 "f38dbe6c439a09271c947df2fe194c60b4f3d63e701a69287c49bc4abfc3600b" => :catalina
+    sha256 "9a6a3484da3bd0015a3df31815091e11af2b3afb1675f64e86277eee894e416c" => :mojave
   end
 
   depends_on "cmake" => :build
@@ -23,6 +24,8 @@ class Monero < Formula
   depends_on "readline"
   depends_on "unbound"
   depends_on "zeromq"
+
+  conflicts_with "wownero", because: "both install a wallet2_api.h header"
 
   def install
     system "cmake", ".", *std_cmake_args

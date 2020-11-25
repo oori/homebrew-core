@@ -6,8 +6,14 @@ class SqliteAnalyzer < Formula
   sha256 "90bf7604a5aa26deece551af7a665fd4ce3d854ea809899c0e4bb19a69d609b8"
   license "blessing"
 
+  livecheck do
+    url "https://sqlite.org/news.html"
+    regex(%r{v?(\d+(?:\.\d+)+)</h3>}i)
+  end
+
   bottle do
     cellar :any_skip_relocation
+    sha256 "8952ea9c9a00569abbcfd7692c88c70e0db3e98fbc7b8fe6000b7548a668aca0" => :big_sur
     sha256 "9e59b093b696037bde52e57a1993961dde8233fbb7305157da8be0e54a986804" => :catalina
     sha256 "c76502517f95848e816532390f2b9a49b0a49b304da4b534bf299161a94d60ce" => :mojave
     sha256 "b43f737792c6eaaa3cb36af271d37bbb50e8f1232614ae38c314b84411616bc1" => :high_sierra

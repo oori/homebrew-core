@@ -4,11 +4,13 @@ class OpencvAT3 < Formula
   url "https://github.com/opencv/opencv/archive/3.4.12.tar.gz"
   sha256 "c8919dfb5ead6be67534bf794cb0925534311f1cd5c6680f8164ad1813c88d13"
   license "BSD-3-Clause"
+  revision 3
 
   bottle do
-    sha256 "ddd575264b09a0c2082f37b8a07ce1782ef0b0e72d67245a6fbe177a3382938b" => :catalina
-    sha256 "907fb90b36f3a4db48a278a7f06d258b778c29a614d074b42eac9de7db9e4e8c" => :mojave
-    sha256 "4ea1d46fdcc64cf34583fd4a8f2d9eedbacd05b53cad79fc458701d857fbdd36" => :high_sierra
+    sha256 "640ea516919445ee6d370678986093de9b7f3b27b756d76a0904687f94cec8c5" => :big_sur
+    sha256 "00b159415bc4ec16ed27f06f88fe5cb1db66f8a870d6564a7782d1ec56a6e672" => :catalina
+    sha256 "ffe594a6c6dfef0cc14dd61b21e3160e230b779abc45007d1e41a0ff4fe33861" => :mojave
+    sha256 "5be7afd889d93bc4c326d39701a8edd864d847a01528d0222868896efd2d1101" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -25,7 +27,7 @@ class OpencvAT3 < Formula
   depends_on "libtiff"
   depends_on "numpy"
   depends_on "openexr"
-  depends_on "python@3.8"
+  depends_on "python@3.9"
   depends_on "tbb"
 
   resource "contrib" do
@@ -70,7 +72,7 @@ class OpencvAT3 < Formula
       -DWITH_VTK=OFF
       -DBUILD_opencv_python2=OFF
       -DBUILD_opencv_python3=ON
-      -DPYTHON3_EXECUTABLE=#{Formula["python@3.8"].opt_bin}/python3
+      -DPYTHON3_EXECUTABLE=#{Formula["python@3.9"].opt_bin}/python3
     ]
 
     args << "-DENABLE_AVX=OFF" << "-DENABLE_AVX2=OFF"
@@ -102,9 +104,9 @@ class OpencvAT3 < Formula
     system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}", "-o", "test"
     assert_equal `./test`.strip, version.to_s
 
-    py3_version = Language::Python.major_minor_version Formula["python@3.8"].opt_bin/"python3"
+    py3_version = Language::Python.major_minor_version Formula["python@3.9"].opt_bin/"python3"
     ENV["PYTHONPATH"] = lib/"python#{py3_version}/site-packages"
-    output = shell_output(Formula["python@3.8"].opt_bin/"python3 -c 'import cv2; print(cv2.__version__)'")
+    output = shell_output(Formula["python@3.9"].opt_bin/"python3 -c 'import cv2; print(cv2.__version__)'")
     assert_equal version.to_s, output.chomp
   end
 end

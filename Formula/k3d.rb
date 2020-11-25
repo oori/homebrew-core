@@ -1,8 +1,8 @@
 class K3d < Formula
   desc "Little helper to run Rancher Lab's k3s in Docker"
-  homepage "https://github.com/rancher/k3d"
-  url "https://github.com/rancher/k3d/archive/v3.1.3.tar.gz"
-  sha256 "47e3388cb7960253af625550462f47867936b07625a0318eccde2551048eb5a2"
+  homepage "https://k3d.io"
+  url "https://github.com/rancher/k3d/archive/v3.3.0.tar.gz"
+  sha256 "f253337e99685053958d8e799eee6bdc13bf117425d6c8af0a07d5508451a8f2"
   license "MIT"
 
   livecheck do
@@ -12,9 +12,9 @@ class K3d < Formula
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "88ab5b832c60780a77a5ab23fb9279e7aa8fffb54f9c372e835cbfb335961b9c" => :catalina
-    sha256 "469179e733517139915d369b4deb1587291ee4f1e635d86a47ef8aeae7b84372" => :mojave
-    sha256 "243b148634fa7f0e756fbac37a9ade3e380ceee3806479cf1a9883ce9ee14f95" => :high_sierra
+    sha256 "a8a778f929bdb8610640ca4633bb1f6295b7b32dfc181b3704d35e6e76be11d0" => :big_sur
+    sha256 "cdd66d870390613591ece810c90775eb624f09e07901c0d25b947bd6c1f94a77" => :catalina
+    sha256 "8246119e04ec70ebd1a0b70fc974da45b48062b5994f95927749d8943ade5a07" => :mojave
   end
 
   depends_on "go" => :build
@@ -41,7 +41,6 @@ class K3d < Formula
     # In any case I wouldn't expect a cluster with name 6d6de430dbd8080d690758a4b5d57c86 to be present
     # (which is the md5sum of 'homebrew-failing-test')
     output = shell_output("#{bin}/k3d cluster get 6d6de430dbd8080d690758a4b5d57c86 2>&1", 1).split("\n").pop
-    assert_match output,
-      "\x1B\[31mFATA\x1B\[0m\[0000\]\ No\ nodes\ found\ for\ cluster\ '6d6de430dbd8080d690758a4b5d57c86'\ "
+    assert_match "No nodes found for given cluster", output
   end
 end

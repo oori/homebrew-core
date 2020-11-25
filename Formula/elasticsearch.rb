@@ -1,15 +1,16 @@
 class Elasticsearch < Formula
   desc "Distributed search & analytics engine"
   homepage "https://www.elastic.co/products/elasticsearch"
-  url "https://github.com/elastic/elasticsearch/archive/v7.9.2.tar.gz"
-  sha256 "37c92912b523af43bf6b7f942da5db260516d15193c4c5de6a969ab1a300bd9f"
+  url "https://github.com/elastic/elasticsearch/archive/v7.10.0.tar.gz"
+  sha256 "f9ed6fab9c34dd77e21ed5bbc88256b54674295455c72b79490476f71de38440"
   license "Apache-2.0"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "21abd819639503965da418a97c1ab6f1b54c354bd5d1c09f2bc3e6203bba6fd6" => :catalina
-    sha256 "e637210275bebfd6354220a64e7af7b9b415ad8f57ad16c8dd6d4eebf1e95d19" => :mojave
-    sha256 "a9e12415d7e00ffe5cbabaa2f31fd9aed777397f0794db0548579c01fd2f9ab4" => :high_sierra
+    sha256 "b437ee4e8d565a44e2badb2fcf14ad15edb9c13d6f5c2691a3afa2e41454a82c" => :big_sur
+    sha256 "499dca3ebaab05e21f582b0d3e933db36f5b1c75f3709afde704e22d09797ea2" => :catalina
+    sha256 "0cffa27f33980f16387789cc6031d0ed1c960d726509c160449238a8057cf425" => :mojave
+    sha256 "5d89734940c42cfb4aabfb6adcbd9e04eb2f3d2dc932486725db942124c817ab" => :high_sierra
   end
 
   depends_on "gradle" => :build
